@@ -1,5 +1,9 @@
 name: "CodeClimate Standalone"
+author: "Sean Erswell-Liljefelt"
 description: "Runs a detached version of CodeClimate which reports only in the workflow and does not require the CodeClimate Service"
+branding:
+  color: gray-dark
+  icon: chevrons-up
 inputs:
   config_file:
     description: "Optionally provide a path to your codeclimate.yml relative to your project"
