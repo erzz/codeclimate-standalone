@@ -1,0 +1,19 @@
+name: Tests
+on: push
+
+jobs:
+  # <------------------ TEST BASIC JOB ------------------->
+  code-quality-basic:
+    name: Basic
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Check out self as repo
+        uses: actions/checkout@v2
+        with:
+          repository: erzz/codeclimate-standalone
+          ref: initial-version
+          path: ./.github/actions/self
+      - name: Basic Test
+        uses: ./.github/actions/self
