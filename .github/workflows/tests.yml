@@ -1,5 +1,8 @@
 name: Tests
-on: push
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   # <------------------ TEST BASIC JOB ------------------->
@@ -13,7 +16,26 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: erzz/codeclimate-standalone
-          ref: $GITHUB_REF
           path: ./.github/actions/self
       - name: Basic Test
         uses: ./.github/actions/self
+  code-quality-advanced:
+    name: Advanced
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Check out self as repo
+        uses: actions/checkout@v2
+        with:
+          repository: erzz/codeclimate-standalone
+          path: ./.github/actions/self
+      - name: Basic Test
+        uses: ./.github/actions/self
+        with:
+          html_report: true
+          info_threshold: 10
+          minor_threshold: 5
+          major_threshold: 1
+          critical_threshold: 0
+          blocker_threshold: 0
