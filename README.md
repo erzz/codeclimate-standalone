@@ -1,5 +1,7 @@
 # codeclimate-standalone
 
+[![Tests](https://github.com/erzz/codeclimate-standalone/actions/workflows/tests.yml/badge.svg)](https://github.com/erzz/codeclimate-standalone/actions/workflows/tests.yml)
+
 ## Purpose
 
 Code Climate is a great service with pricing and plans for all kinds of users. However there are cases where you may not want to send results to an external service or just want a quick PASS / FAIL based on simple thresholds directly within the workflow with no frills
