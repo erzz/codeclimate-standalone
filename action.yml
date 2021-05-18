@@ -145,11 +145,11 @@ runs:
         # Output in logs
         echo "#### RESULT ####"
         echo "total_issues: ${{ steps.cc.outputs.total }}"
-        echo "info: ${{ steps.cc.outputs.info }}"
-        echo "minor: ${{ steps.cc.outputs.minor }}"
-        echo "major: ${{ steps.cc.outputs.major }}"
-        echo "critical: ${{ steps.cc.outputs.critical }}"
-        echo "blocker: ${{ steps.cc.outputs.blocker }}"
+        echo "info: ${{ steps.cc.outputs.info }} allowed: $CC_INFO_ALLOWED"
+        echo "minor: ${{ steps.cc.outputs.minor }} allowed: $CC_MINOR_ALLOWED"
+        echo "major: ${{ steps.cc.outputs.major }} allowed: $CC_MAJOR_ALLOWED"
+        echo "critical: ${{ steps.cc.outputs.critical }} allowed: $CC_CRITICAL_ALLOWED"
+        echo "blocker: ${{ steps.cc.outputs.blocker }} allowed: $CC_BLOCKERS_ALLOWED"
 
         # Pass or Fail the job depending on the findings / inputs
         if [ ${{ steps.cc.outputs.blocker }} -gt "$CC_BLOCKERS_ALLOWED" ] || [ ${{ steps.cc.outputs.critical }} -gt "$CC_CRITICAL_ALLOWED" ] || [ ${{ steps.cc.outputs.major }} -gt "$CC_MAJOR_ALLOWED" ] || [ ${{ steps.cc.outputs.minor }} -gt "$CC_MINOR_ALLOWED" ] || [ ${{ steps.cc.outputs.info }} -gt "$CC_INFO_ALLOWED" ]; then
