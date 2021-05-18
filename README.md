@@ -47,13 +47,23 @@ Some simple outputs are provided for use in later steps / jobs
 | `critical_findings` | The number of findings of severity CRITICAL |
 | `blocker_findings`  | The number of findings of severity BLOCKER  |
 
+## Potential Artifacts
+
+### codeclimate-report.json
+
+The default output of this job is the JSON format of the report and it is often useful for further parsing and manipulation.
+
+### codeclimate-report.html
+
+This report is only available if the input `html_report` is set to true. Useful for a human to read when investigating what the findings were with helpful links and references.
+
 ## Examples
 
 ### Run a default codeclimate scan
 
 The main thing to ensure is that you **MUST** checkout your code in a preceding step otherwise there would be nothing to scan!
 
-If you place your `.codeclimate.yml`at the root of your project then no further configuration is required by default
+If you place your `.codeclimate.yml` at the root of your project then no further configuration is required by default
 
 ```yaml
 jobs:
