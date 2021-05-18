@@ -1,4 +1,4 @@
-name: "CodeClimate Standalone"
+name: "Code Climate Standalone"
 author: "Sean Erswell-Liljefelt"
 description: "Runs a detached version of CodeClimate which reports only in the workflow and does not require the CodeClimate Service"
 branding:
