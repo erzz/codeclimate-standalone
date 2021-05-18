@@ -6,7 +6,7 @@ inputs:
     required: false
     default: ".codeclimate.yml"
   html_report:
-    description: "Should a faster second execution occur in order to generate an HTML report"
+    description: "Should a faster, second, execution occur in order to generate an HTML report"
     required: false
     default: "false"
   info_threshold:
@@ -32,19 +32,19 @@ inputs:
 outputs:
   info_findings:
     description: "The number of findings of severity INFO"
-    value: ${{ steps.random-number-generator.outputs.random-id }}
+    value: ${{ steps.cc.outputs.info }}
   minor_findings:
     description: "The number of findings of severity MINOR"
-    value: ${{ steps.random-number-generator.outputs.random-id }}
+    value: ${{ steps.cc.outputs.minor }}
   major_findings:
     description: "The number of findings of severity MAJOR"
-    value: ${{ steps.random-number-generator.outputs.random-id }}
+    value: ${{ steps.cc.outputs.major }}
   critical_findings:
     description: "The number of findings of severity CRITICAL"
-    value: ${{ steps.random-number-generator.outputs.random-id }}
+    value: ${{ steps.cc.outputs.critical }}
   blocker_findings:
     description: "The number of findings of severity BLOCKER"
-    value: ${{ steps.random-number-generator.outputs.random-id }}
+    value: ${{ steps.cc.outputs.blocker }}
 runs:
   using: "composite"
   steps:
@@ -141,7 +141,6 @@ runs:
         CC_MINOR_ALLOWED: ${{ inputs.minor_threshold }}
         CC_INFO_ALLOWED: ${{ inputs.info_threshold }}
       run: |
-        echo "$CC_BLOCKERS_ALLOWED"  #DEBUG
         # Output in logs
         echo "#### RESULT ####"
         echo "total_issues: ${{ steps.cc.outputs.total }}"
