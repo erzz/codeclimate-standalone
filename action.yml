@@ -105,26 +105,31 @@ runs:
       shell: bash
       env:
         CC_CONF: ${{ inputs.config_file }}
+        HTML_REPORT: ${{ inputs.html_report }}
       run: |
-        # If no configuration supplied the job will run with Code Climate's default settings
-        # and language detection. Providing your own config is highly recommended for speed 
-        # and accuracy
+        if [ "$HTML_REPORT" = true ]; then
+          # If no configuration supplied the job will run with Code Climate's default settings
+          # and language detection. Providing your own config is highly recommended for speed 
+          # and accuracy
 
-        echo "#### CONFIG ####"
-        if [ -f .codeclimate.yml ] || cp "$CC_CONF" .codeclimate.yml; then 
-          echo "Found codeclimate.yml at project root"
+          echo "#### CONFIG ####"
+          if [ -f .codeclimate.yml ] || cp "$CC_CONF" .codeclimate.yml; then 
+            echo "Found codeclimate.yml at project root"
+          else
+            echo "::warning::No configuration found, using Code Climate's default configuration"
+          fi
+
+          # Run for HTML output
+          echo "#### GENERATING HTML VERSION ####"
+          docker run \
+            --env CODECLIMATE_CODE="$PWD" \
+            --volume "$PWD":/code \
+            --volume /var/run/docker.sock:/var/run/docker.sock \
+            --volume /tmp/cc:/tmp/cc \
+            codeclimate/codeclimate analyze -f html > codeclimate-report.html
         else
-          echo "::warning::No configuration found, using Code Climate's default configuration"
+          echo "HTML REPORT not requested, skipping..."
         fi
-
-        # Run for HTML output
-        echo "#### GENERATING HTML VERSION ####"
-        docker run \
-          --env CODECLIMATE_CODE="$PWD" \
-          --volume "$PWD":/code \
-          --volume /var/run/docker.sock:/var/run/docker.sock \
-          --volume /tmp/cc:/tmp/cc \
-          codeclimate/codeclimate analyze -f html > codeclimate-report.html
 
     # Determine the result
     - name: Parse Result
