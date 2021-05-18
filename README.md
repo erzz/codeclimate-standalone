@@ -57,6 +57,21 @@ The default output of this job is the JSON format of the report and it is often 
 
 This report is only available if the input `html_report` is set to true. Useful for a human to read when investigating what the findings were with helpful links and references.
 
+### Collecting artifacts
+
+As with any other artifact - a simple step such as the following would upload both the JSON and HTML (if enabled) artifacts at the end of the job
+
+```yaml
+- name: Upload Reports
+  uses: actions/upload-artifact@v2
+  if: always()
+  with:
+    name: Code Climate Reports
+    path: |
+      codeclimate-report.json
+      codeclimate-report.html
+```
+
 ## Examples
 
 ### Run a default codeclimate scan
