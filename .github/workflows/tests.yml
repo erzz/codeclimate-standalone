@@ -9,14 +9,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Check out self as repo
-        uses: actions/checkout@v2
-        with:
-          repository: erzz/codeclimate-standalone
-          ref: ${{ github.ref }}
-          path: ./.github/actions/self
       - name: Basic Test
-        uses: ./.github/actions/self
+        uses: ./
       - name: Upload Reports
         uses: actions/upload-artifact@v2
         if: always()
@@ -32,14 +26,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Check out self as repo
-        uses: actions/checkout@v2
-        with:
-          repository: erzz/codeclimate-standalone
-          ref: ${{ github.ref }}
-          path: ./.github/actions/self
       - name: Advanced Test
-        uses: ./.github/actions/self
+        uses: ./
         with:
           html_report: true
           info_threshold: 10
