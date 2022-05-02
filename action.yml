@@ -5,6 +5,10 @@ branding:
   color: gray-dark
   icon: chevrons-up
 inputs:
+  path:
+    description: "Relative path from your project root to the codebase to scanned"
+    required: false
+    default: ""
   config_file:
     description: "Optionally provide a path to your codeclimate.yml relative to your project"
     required: false
@@ -57,6 +61,7 @@ runs:
       shell: bash
       id: cc
       env:
+        CC_CODE: ${{ github.workspace }}/${{ inputs.path }}
         CC_CONF: ${{ inputs.config_file }}
         CC_BLOCKERS_ALLOWED: ${{ inputs.blocker_threshold }}
         CC_CRITICAL_ALLOWED: ${{ inputs.critical_threshold }}
@@ -69,7 +74,7 @@ runs:
         # and accuracy
 
         echo "#### CONFIG ####"
-        if [ -f .codeclimate.yml ] || cp "$CC_CONF" .codeclimate.yml; then 
+        if [ cp "$CC_CONF" "$CC_CODE/.codeclimate.yml"; then
           echo "Found codeclimate config, using that"
         else
           echo "::warning::No configuration found, using Code Climate's default configuration"
@@ -78,14 +83,14 @@ runs:
         # Run once for JSON output
         echo "#### INITIAL RUN ####"
         docker run \
-          --env CODECLIMATE_CODE="$PWD" \
-          --volume "$PWD":/code \
+          --env CODECLIMATE_CODE="$CC_CODE" \
+          --volume "$CC_CODE":/code \
           --volume /var/run/docker.sock:/var/run/docker.sock \
           --volume /tmp/cc:/tmp/cc \
           codeclimate/codeclimate analyze -f json > raw.json
 
         # Strip the json to only issues
-        jq -c 'map(select(.type | test("issue"; "i")))' raw.json > codeclimate-report.json
+        jq -c 'map(select(.type | test("issue"; "i")))' "$CC_CODE/raw.json" > codeclimate-report.json
 
         # Parse to provide simple job output
         TOTAL_ISSUES=$(jq '. | length' codeclimate-report.json)
@@ -108,6 +113,7 @@ runs:
     - name: Generate HTML Report
       shell: bash
       env:
+        CC_CODE: ${{ github.workspace }}/${{ inputs.path }}
         CC_CONF: ${{ inputs.config_file }}
         HTML_REPORT: ${{ inputs.html_report }}
       run: |
@@ -117,8 +123,8 @@ runs:
           # and accuracy
 
           echo "#### CONFIG ####"
-          if [ -f .codeclimate.yml ] || cp "$CC_CONF" .codeclimate.yml; then 
-            echo "Found codeclimate.yml at project root"
+          if [ cp "$CC_CONF" "$CC_CODE/.codeclimate.yml"; then 
+            echo "Found codeclimate config, using that"
           else
             echo "::warning::No configuration found, using Code Climate's default configuration"
           fi
@@ -126,11 +132,12 @@ runs:
           # Run for HTML output
           echo "#### GENERATING HTML VERSION ####"
           docker run \
-            --env CODECLIMATE_CODE="$PWD" \
-            --volume "$PWD":/code \
+            --env CODECLIMATE_CODE="$CC_CODE" \
+            --volume "$CC_CODE":/code \
             --volume /var/run/docker.sock:/var/run/docker.sock \
             --volume /tmp/cc:/tmp/cc \
             codeclimate/codeclimate analyze -f html > codeclimate-report.html
+            mv "$CC_CODE/codeclimate-report.html" codeclimate-report.html
         else
           echo "HTML REPORT not requested, skipping..."
         fi
