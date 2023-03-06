@@ -96,12 +96,12 @@ runs:
         TOTAL_INFO=$(jq 'map(select(.severity == "info")) | length' codeclimate-report.json)
 
         # Set outputs
-        echo "::set-output name=total::$TOTAL_ISSUES"
-        echo "::set-output name=info::$TOTAL_INFO"
-        echo "::set-output name=minor::$TOTAL_MINOR"
-        echo "::set-output name=major::$TOTAL_MAJOR"
-        echo "::set-output name=critical::$TOTAL_CRITICAL"
-        echo "::set-output name=blocker::$TOTAL_BLOCKER"
+        echo "total=$TOTAL_ISSUES" >> $GITHUB_OUTPUT
+        echo "info=$TOTAL_INFO"  >> $GITHUB_OUTPUT
+        echo "minor=$TOTAL_MINOR" >> $GITHUB_OUTPUT
+        echo "major=$TOTAL_MAJOR" >> $GITHUB_OUTPUT
+        echo "critical=$TOTAL_CRITICAL" >> $GITHUB_OUTPUT
+        echo "blocker=$TOTAL_BLOCKER" >> $GITHUB_OUTPUT
 
     # Second run purely to get the readable HTML report. The second run is much faster than the first
     # as it does not need to redownload the images already pulled by the first run
