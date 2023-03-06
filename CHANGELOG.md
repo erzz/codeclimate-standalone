@@ -1,3 +1,15 @@
+## [0.0.5](https://github.com/erzz/codeclimate-standalone/compare/v0.0.4...v0.0.5) (2023-03-06)
+
+
+### :package: Maintenance
+
+* **deps:** update cycjimmy/semantic-release-action action to v3.2.0 ([5ad6b32](https://github.com/erzz/codeclimate-standalone/commit/5ad6b32ac1622aa8853db58b201c84c03849d98b))
+
+
+### :bug: Bug Fixes
+
+* remove deprecated method of setting outputs ([58c7b60](https://github.com/erzz/codeclimate-standalone/commit/58c7b6034b4efbadab3421d703211954a977f728))
+
 ### [0.0.4](https://github.com/erzz/codeclimate-standalone/compare/v0.0.3...v0.0.4) (2022-03-21)
 
 
