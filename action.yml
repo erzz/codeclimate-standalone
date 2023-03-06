@@ -70,7 +70,7 @@ runs:
 
         echo "#### CONFIG ####"
         if [ -f .codeclimate.yml ] || cp "$CC_CONF" .codeclimate.yml; then 
-          echo "Found codeclimate config, using that"
+          echo "Using the repository code climate configuration"
         else
           echo "::warning::No configuration found, using Code Climate's default configuration"
         fi
@@ -118,7 +118,7 @@ runs:
 
           echo "#### CONFIG ####"
           if [ -f .codeclimate.yml ] || cp "$CC_CONF" .codeclimate.yml; then 
-            echo "Found codeclimate.yml at project root"
+            echo "Using the repository code climate configuration"
           else
             echo "::warning::No configuration found, using Code Climate's default configuration"
           fi
