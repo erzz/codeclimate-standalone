@@ -97,7 +97,7 @@ runs:
 
         # Set outputs
         echo "total=$TOTAL_ISSUES" >> $GITHUB_OUTPUT
-        echo "info=$TOTAL_INFO"  >> $GITHUB_OUTPUT
+        echo "info=$TOTAL_INFO" >> $GITHUB_OUTPUT
         echo "minor=$TOTAL_MINOR" >> $GITHUB_OUTPUT
         echo "major=$TOTAL_MAJOR" >> $GITHUB_OUTPUT
         echo "critical=$TOTAL_CRITICAL" >> $GITHUB_OUTPUT
