@@ -12,7 +12,7 @@ jobs:
       - name: Basic Test
         uses: ./
       - name: Upload Reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: Basic Reports
@@ -36,7 +36,7 @@ jobs:
           critical_threshold: 0
           blocker_threshold: 0
       - name: Upload Reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: Advanced Reports
