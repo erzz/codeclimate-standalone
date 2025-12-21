@@ -5,6 +5,9 @@ branding:
   color: gray-dark
   icon: chevrons-up
 inputs:
+  working_directory:
+    description: "The directory to run Code Climate in"
+    required: false
   config_file:
     description: "Optionally provide a path to your codeclimate.yml relative to your project"
     required: false
@@ -49,6 +52,7 @@ outputs:
   blocker_findings:
     description: "The number of findings of severity BLOCKER"
     value: ${{ steps.cc.outputs.blocker }}
+
 runs:
   using: "composite"
   steps:
@@ -56,6 +60,7 @@ runs:
     - name: Code Climate
       shell: bash
       id: cc
+      working-directory: ${{ inputs.working_directory && format('{0}/{1}', github.workspace, inputs.working_directory) || github.workspace }}
       env:
         CC_CONF: ${{ inputs.config_file }}
         CC_BLOCKERS_ALLOWED: ${{ inputs.blocker_threshold }}
@@ -107,6 +112,7 @@ runs:
     # as it does not need to redownload the images already pulled by the first run
     - name: Generate HTML Report
       shell: bash
+      working-directory: ${{ inputs.working_directory && format('{0}/{1}', github.workspace, inputs.working_directory) || github.workspace }}
       env:
         CC_CONF: ${{ inputs.config_file }}
         HTML_REPORT: ${{ inputs.html_report }}
@@ -138,6 +144,7 @@ runs:
     # Determine the result
     - name: Parse Result
       shell: bash
+      working-directory: ${{ inputs.working_directory && format('{0}/{1}', github.workspace, inputs.working_directory) || github.workspace }}
       env:
         CC_BLOCKERS_ALLOWED: ${{ inputs.blocker_threshold }}
         CC_CRITICAL_ALLOWED: ${{ inputs.critical_threshold }}
