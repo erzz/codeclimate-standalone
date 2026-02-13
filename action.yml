@@ -1,6 +1,6 @@
 name: "Code Climate Standalone"
 author: "Sean Erswell-Liljefelt"
-description: "Runs a detached version of CodeClimate which reports only in the workflow and does not require the CodeClimate Service"
+description: "Runs a detached version of CodeClimate which reports only in the workflow and does not require the CodeClimate SaaS Service"
 branding:
   color: gray-dark
   icon: chevrons-up
